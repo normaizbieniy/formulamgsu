@@ -191,13 +191,27 @@
             font-size: 0.95rem;
             margin-top: 0.2rem;
         }
+        /* Карточки пилотов */
         .driver-photo {
             height: 180px;
             background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            overflow: hidden;
+        }
+
+        .driver-photo img {
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 0;
+            transition: transform 0.3s;
+        }
+
+        .driver-card:hover .driver-photo img {
+            transform: scale(1.05);
         }
         .driver-stats {
             padding: 1.2rem;
@@ -292,8 +306,8 @@
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="drivers.html" class="active">Пилоты</a></li>
                 <li><a href="teams.html">Команды</a></li>
-                <li><a href="schedule.html">Календарь</a></li>
-                <li><a href="records.html">Рекорды</a></li>
+                <li><a href="history.html">История</a></li>
+                <li><a href="schedule.html">Расписание 2026</a></li>
             </ul>
         </div>
     </nav>
@@ -365,57 +379,56 @@
     <!-- JavaScript для фильтрации -->
     <script>
         const driversData = [
-            // Формат: [номер, имя, команда, сезоны, этапы, очки, победы, подиумы, поулы, титулы, ДНФ, команды (полные)]
-            [24, "Чжоу Гуаньюй", "Alfa Romeo / Kick Sauber", "4", "69", "16", "0", "0", "0", "0", "8", "Alfa Romeo, Stake F1 Team Kick Sauber"],
-            [30, "Ник де Врис", "Williams / AlphaTauri", "2", "11", "2", "0", "0", "0", "0", "2", "Williams, Scuderia AlphaTauri"],
-            [81, "Оскар Пиастри", "McLaren", "3", "70", "799", "9", "26", "6", "0", "4", "McLaren, BWT Alpine Formula One Team"],
-            [30, "Лиам Лоусон", "Racing Bulls", "3", "35", "44", "0", "0", "0", "0", "6", "Scuderia AlphaTauri, Visa Cash App RB, Oracle Red Bull Racing, Visa Cash App Racing Bulls"],
-            [2, "Логан Сарджент", "Williams", "2", "36", "1", "0", "0", "0", "0", "7", "Williams Racing"],
-            [87, "Оливер Берман", "Haas", "2", "27", "48", "0", "0", "0", "0", "3", "Scuderia Ferrari, Haas F1 Team"],
-            [7, "Джек Дуэн", "Alpine", "2", "7", "0", "0", "0", "0", "0", "2", "Alpine"],
-            [43, "Франко Колапинто", "Alpine", "2", "27", "5", "0", "0", "0", "0", "3", "Williams, Alpine"],
-            [12, "Андреа Кими Антонелли", "Mercedes", "1", "24", "150", "0", "3", "0", "0", "4", "Mercedes"],
-            [6, "Исак Хаджар", "Racing Bulls", "1", "23", "51", "0", "1", "0", "0", "2", "Visa Cash App Racing Bulls"],
-            [5, "Габриэль Бортолето", "Kick Sauber", "1", "24", "19", "0", "0", "0", "0", "5", "Stake F1 Team Kick Sauber"],
-            [6, "Нико Росберг", "Mercedes", "11", "206", "1594.5", "23", "57", "30", "1", "37", "Williams, Mercedes"],
-            [19, "Фелипе Масса", "Ferrari", "15", "272", "1167", "11", "41", "16", "0", "57", "Sauber, Ferrari, Williams"],
-            [22, "Дженсон Баттон", "McLaren", "18", "309", "1235", "15", "50", "8", "1", "88", "Williams, Benetton, Renault, BAR, Honda, Brawn GP, McLaren"],
-            [13, "Пастор Мальдонадо", "Williams", "5", "90", "76", "1", "0", "1", "0", "33", "Williams, Lotus"],
-            [28, "Маркус Эрикссон", "Alfa Romeo", "5", "97", "18", "0", "0", "0", "0", "35", "Caterham, Sauber, Alfa Romeo"],
-            [0, "Фелипе Наср", "Sauber", "2", "40", "29", "0", "0", "0", "0", "6", "Sauber"],
-            [28, "Уилл Стивенс", "Manor", "2", "18", "0", "0", "0", "0", "0", "2", "Caterham, Manor Marussia"],
-            [0, "Роберто Мери", "Manor", "1", "13", "0", "0", "0", "0", "0", "1", "Manor Marussia"],
-            [0, "Александр Росси", "Manor", "1", "5", "0", "0", "0", "0", "0", "0", "Manor Marussia"],
-            [30, "Джолион Палмер", "Renault", "2", "35", "9", "0", "0", "0", "0", "7", "Renault"],
-            [2, "Стоффель Вандорн", "McLaren", "3", "42", "26", "0", "0", "0", "0", "7", "McLaren"],
-            [94, "Паскаль Верляйн", "Sauber", "2", "40", "6", "0", "0", "0", "0", "8", "Manor, Sauber"],
-            [88, "Рио Харьянто", "Manor", "1", "12", "0", "0", "0", "0", "0", "3", "Manor Racing"],
-            [21, "Эстебан Гутьеррес", "Haas", "3", "57", "6", "0", "0", "0", "0", "13", "Sauber, Haas"],
-            [44, "Льюис Хэмилтон", "Ferrari", "19", "380", "5018.5", "105", "202", "104", "7", "34", "McLaren, Mercedes, Ferrari"],
-            [77, "Вальтери Боттас", "Alfa Romeo", "12", "267", "1797", "10", "67", "20", "0", "25", "Williams, Mercedes, Alfa Romeo"],
-            [5, "Себастьян Феттель", "Aston Martin", "16", "307", "3098", "53", "122", "57", "4", "28", "BMW, Toro Rosso, Red Bull, Ferrari, Aston Martin"],
-            [16, "Шарль Леклер", "Ferrari", "8", "171", "1672", "8", "50", "27", "0", "23", "Alfa Romeo, Ferrari"],
-            [1, "Макс Ферстаппен", "Red Bull", "11", "233", "3444.5", "71", "127", "48", "4", "33", "Toro Rosso, Red Bull"],
-            [23, "Александр Албон", "Williams", "6", "129", "313", "0", "2", "0", "0", "22", "Toro Rosso, Red Bull Racing, Williams"],
-            [55, "Карлос Сайнс", "Williams", "11", "230", "1336.5", "4", "29", "6", "0", "42", "Toro Rosso, Renault, McLaren, Ferrari, Williams"],
-            [4, "Ландо Норрис", "McLaren", "7", "152", "1430", "11", "44", "16", "1", "13", "McLaren"],
-            [3, "Даниэль Риккардо", "RB", "14", "257", "1329", "8", "32", "3", "0", "35", "HRT, Toro Rosso, Red Bull, Renault, McLaren, RB"],
-            [31, "Эстебан Окон", "Haas", "9", "180", "483", "1", "4", "0", "0", "25", "Manor, Force India, Renault, Alpine, Haas"],
-            [26, "Даниил Квят", "AlphaTauri", "6", "112", "202", "0", "3", "0", "0", "20", "Toro Rosso, Red Bull, Scuderia AlphaTauri"],
-            [10, "Пьер Гасли", "Alpine", "9", "178", "458", "1", "5", "0", "0", "26", "Toro Rosso, Red Bull, AlphaTauri, Alpine"],
-            [11, "Серхио Перес", "Red Bull", "14", "283", "1638", "6", "39", "3", "0", "28", "Sauber, McLaren, Force India, Racing Point, Red Bull"],
-            [18, "Лэнс Стролл", "Aston Martin", "9", "192", "325", "0", "3", "1", "0", "31", "Williams, Racing Point, Aston Martin"],
-            [7, "Кими Райкконен", "Alfa Romeo", "19", "352", "1873", "21", "103", "18", "1", "71", "Sauber, McLaren, Ferrari, Lotus, Alfa Romeo"],
-            [99, "Антонио Джовинацци", "Alfa Romeo", "4", "62", "21", "0", "0", "0", "0", "6", "Sauber, Alfa Romeo"],
-            [8, "Роман Грожан", "Haas", "10", "181", "391", "0", "10", "0", "0", "50", "Renault, Lotus, Haas"],
-            [20, "Кевин Магнуссен", "Haas", "10", "186", "202", "0", "1", "0", "0", "35", "McLaren, Renault, Haas"],
-            [63, "Джордж Рассел", "Mercedes", "7", "152", "1033", "5", "24", "8", "0", "19", "Williams, Mercedes"],
-            [6, "Николас Латифи", "Williams", "3", "61", "9", "0", "0", "0", "0", "13", "Williams"],
-            [14, "Фернандо Алонсо", "Aston Martin", "22", "427", "2393", "32", "106", "22", "2", "83", "Minardi, Renault, McLaren, Ferrari, Alpine, Aston Martin"],
-            [22, "Юки Цунода", "Racing Bulls", "5", "111", "124", "0", "0", "0", "0", "15", "AlphaTauri, Racing Bulls, Red Bull"],
-            [9, "Никита Мазепин", "Haas", "1", "22", "0", "0", "0", "0", "0", "1", "Haas"],
-            [47, "Мик Шумахер", "Haas", "2", "44", "12", "0", "0", "0", "0", "5", "Haas"],
-            [27, "Нико Хюлькенберг", "Haas", "14", "251", "622", "0", "1", "1", "0", "44", "Williams, Force India, Sauber, Renault, Racing Point, Aston Martin, Haas"]
+            [24, "Чжоу Гуаньюй", "Zhou_Guanyu", "Alfa Romeo / Kick Sauber", "4", "69", "16", "0", "0", "0", "0", "8", "Alfa Romeo, Stake F1 Team Kick Sauber"],
+            [30, "Ник де Врис", "Nyck_de_Vries", "Williams / AlphaTauri", "2", "11", "2", "0", "0", "0", "0", "2", "Williams, Scuderia AlphaTauri"],
+            [81, "Оскар Пиастри", "Oscar_Piastri", "McLaren", "3", "70", "799", "9", "26", "6", "0", "4", "McLaren, BWT Alpine Formula One Team"],
+            [30, "Лиам Лоусон", "Liam_Lawson", "Racing Bulls", "3", "35", "44", "0", "0", "0", "0", "6", "Scuderia AlphaTauri, Visa Cash App RB, Oracle Red Bull Racing, Visa Cash App Racing Bulls"],
+            [2, "Логан Сарджент", "Logan_Sargeant", "Williams", "2", "36", "1", "0", "0", "0", "0", "7", "Williams Racing"],
+            [87, "Оливер Берман", "Oliver_Bearman", "Haas", "2", "27", "48", "0", "0", "0", "0", "3", "Scuderia Ferrari, Haas F1 Team"],
+            [7, "Джек Дуэн", "Jack_Doohan", "Alpine", "2", "7", "0", "0", "0", "0", "0", "2", "Alpine"],
+            [43, "Франко Колапинто", "Franco_Colapinto", "Alpine", "2", "27", "5", "0", "0", "0", "0", "3", "Williams, Alpine"],
+            [12, "Андреа Кими Антонелли", "Andrea_Kimi_Antonelli", "Mercedes", "1", "24", "150", "0", "3", "0", "0", "4", "Mercedes"],
+            [6, "Исак Хаджар", "Isack_Hadjar", "Racing Bulls", "1", "23", "51", "0", "1", "0", "0", "2", "Visa Cash App Racing Bulls"],
+            [5, "Габриэль Бортолето", "Gabriel_Bortoleto", "Kick Sauber", "1", "24", "19", "0", "0", "0", "0", "5", "Stake F1 Team Kick Sauber"],
+            [6, "Нико Росберг", "Nico_Rosberg", "Mercedes", "11", "206", "1594.5", "23", "57", "30", "1", "37", "Williams, Mercedes"],
+            [19, "Фелипе Масса", "Felipe_Massa", "Ferrari", "15", "272", "1167", "11", "41", "16", "0", "57", "Sauber, Ferrari, Williams"],
+            [22, "Дженсон Баттон", "Jenson_Button", "McLaren", "18", "309", "1235", "15", "50", "8", "1", "88", "Williams, Benetton, Renault, BAR, Honda, Brawn GP, McLaren"],
+            [13, "Пастор Мальдонадо", "Pastor_Maldonado", "Williams", "5", "90", "76", "1", "0", "1", "0", "33", "Williams, Lotus"],
+            [28, "Маркус Эрикссон", "Marcus_Ericsson", "Alfa Romeo", "5", "97", "18", "0", "0", "0", "0", "35", "Caterham, Sauber, Alfa Romeo"],
+            [0, "Фелипе Наср", "Felipe_Nasr", "Sauber", "2", "40", "29", "0", "0", "0", "0", "6", "Sauber"],
+            [28, "Уилл Стивенс", "Will_Stevens", "Manor", "2", "18", "0", "0", "0", "0", "0", "2", "Caterham, Manor Marussia"],
+            [0, "Роберто Мери", "Roberto_Merhi", "Manor", "1", "13", "0", "0", "0", "0", "0", "1", "Manor Marussia"],
+            [0, "Александр Росси", "Alexander_Rossi", "Manor", "1", "5", "0", "0", "0", "0", "0", "0", "Manor Marussia"],
+            [30, "Джолион Палмер", "Jolyon_Palmer", "Renault", "2", "35", "9", "0", "0", "0", "0", "7", "Renault"],
+            [2, "Стоффель Вандорн", "Stoffel_Vandoorne", "McLaren", "3", "42", "26", "0", "0", "0", "0", "7", "McLaren"],
+            [94, "Паскаль Верляйн", "Pascal_Wehrlein", "Sauber", "2", "40", "6", "0", "0", "0", "0", "8", "Manor, Sauber"],
+            [88, "Рио Харьянто", "Rio_Haryanto", "Manor", "1", "12", "0", "0", "0", "0", "0", "3", "Manor Racing"],
+            [21, "Эстебан Гутьеррес", "Esteban_Gutierrez", "Haas", "3", "57", "6", "0", "0", "0", "0", "13", "Sauber, Haas"],
+            [44, "Льюис Хэмилтон", "Lewis_Hamilton", "Ferrari", "19", "380", "5018.5", "105", "202", "104", "7", "34", "McLaren, Mercedes, Ferrari"],
+            [77, "Вальтери Боттас", "Valtteri_Bottas", "Alfa Romeo", "12", "267", "1797", "10", "67", "20", "0", "25", "Williams, Mercedes, Alfa Romeo"],
+            [5, "Себастьян Феттель", "Sebastian_Vettel", "Aston Martin", "16", "307", "3098", "53", "122", "57", "4", "28", "BMW, Toro Rosso, Red Bull, Ferrari, Aston Martin"],
+            [16, "Шарль Леклер", "Charles_Leclerc", "Ferrari", "8", "171", "1672", "8", "50", "27", "0", "23", "Alfa Romeo, Ferrari"],
+            [1, "Макс Ферстаппен", "Max_Verstappen", "Red Bull", "11", "233", "3444.5", "71", "127", "48", "4", "33", "Toro Rosso, Red Bull"],
+            [23, "Александр Албон", "Alexander_Albon", "Williams", "6", "129", "313", "0", "2", "0", "0", "22", "Toro Rosso, Red Bull Racing, Williams"],
+            [55, "Карлос Сайнс", "Carlos_Sainz", "Williams", "11", "230", "1336.5", "4", "29", "6", "0", "42", "Toro Rosso, Renault, McLaren, Ferrari, Williams"],
+            [4, "Ландо Норрис", "Lando_Norris", "McLaren", "7", "152", "1430", "11", "44", "16", "1", "13", "McLaren"],
+            [3, "Даниэль Риккардо", "Daniel_Ricciardo", "RB", "14", "257", "1329", "8", "32", "3", "0", "35", "HRT, Toro Rosso, Red Bull, Renault, McLaren, RB"],
+            [31, "Эстебан Окон", "Esteban_Ocon", "Haas", "9", "180", "483", "1", "4", "0", "0", "25", "Manor, Force India, Renault, Alpine, Haas"],
+            [26, "Даниил Квят", "Daniil_Kvyat", "AlphaTauri", "6", "112", "202", "0", "3", "0", "0", "20", "Toro Rosso, Red Bull, Scuderia AlphaTauri"],
+            [10, "Пьер Гасли", "Pierre_Gasly", "Alpine", "9", "178", "458", "1", "5", "0", "0", "26", "Toro Rosso, Red Bull, AlphaTauri, Alpine"],
+            [11, "Серхио Перес", "Sergio_Perez", "Red Bull", "14", "283", "1638", "6", "39", "3", "0", "28", "Sauber, McLaren, Force India, Racing Point, Red Bull"],
+            [18, "Лэнс Стролл", "Lance_Stroll", "Aston Martin", "9", "192", "325", "0", "3", "1", "0", "31", "Williams, Racing Point, Aston Martin"],
+            [7, "Кими Райкконен", "Kimi_Raikkonen", "Alfa Romeo", "19", "352", "1873", "21", "103", "18", "1", "71", "Sauber, McLaren, Ferrari, Lotus, Alfa Romeo"],
+            [99, "Антонио Джовинацци", "Antonio_Giovinazzi", "Alfa Romeo", "4", "62", "21", "0", "0", "0", "0", "6", "Sauber, Alfa Romeo"],
+            [8, "Роман Грожан", "Romain_Grosjean", "Haas", "10", "181", "391", "0", "10", "0", "0", "50", "Renault, Lotus, Haas"],
+            [20, "Кевин Магнуссен", "Kevin_Magnussen", "Haas", "10", "186", "202", "0", "1", "0", "0", "35", "McLaren, Renault, Haas"],
+            [63, "Джордж Рассел", "George_Russell", "Mercedes", "7", "152", "1033", "5", "24", "8", "0", "19", "Williams, Mercedes"],
+            [6, "Николас Латифи", "Nicholas_Latifi", "Williams", "3", "61", "9", "0", "0", "0", "0", "13", "Williams"],
+            [14, "Фернандо Алонсо", "Fernando_Alonso", "Aston Martin", "22", "427", "2393", "32", "106", "22", "2", "83", "Minardi, Renault, McLaren, Ferrari, Alpine, Aston Martin"],
+            [22, "Юки Цунода", "Yuki_Tsunoda", "Racing Bulls", "5", "111", "124", "0", "0", "0", "0", "15", "AlphaTauri, Racing Bulls, Red Bull"],
+            [9, "Никита Мазепин", "Nikita_Mazepin", "Haas", "1", "22", "0", "0", "0", "0", "0", "1", "Haas"],
+            [47, "Мик Шумахер", "Mick_Schumacher", "Haas", "2", "44", "12", "0", "0", "0", "0", "5", "Haas"],
+            [27, "Нико Хюлькенберг", "Nico_Hulkenberg", "Haas", "14", "251", "622", "0", "1", "1", "0", "44", "Williams, Force India, Sauber, Renault, Racing Point, Aston Martin, Haas"]
         ];
 
         function renderDrivers(filtered = driversData) {
@@ -423,7 +436,7 @@
             container.innerHTML = '';
 
             filtered.forEach(driver => {
-                const [number, name, team, seasons, grandsPrix, points, wins, podiums, poles, titles, dnf, fullTeams] = driver;
+                const [number, name, id, team, seasons, grandsPrix, points, wins, podiums, poles, titles, dnf, fullTeams] = driver;
                 const emoji = '🏎️'; // можно заменить на динамический выбор
 
                 const card = document.createElement('article');
@@ -431,6 +444,8 @@
                 card.dataset.team = fullTeams.toLowerCase();
                 card.dataset.champion = titles > 0 ? '1' : '0';
                 card.dataset.seasons = parseInt(seasons);
+
+                const photoPath = `../photo/${id}.jpg`;
 
                 card.innerHTML = `
                     <div class="driver-header">
@@ -440,7 +455,9 @@
                             <div class="driver-team">${team}</div>
                         </div>
                     </div>
-                    <div class="driver-photo">${emoji}</div>
+                    <div class="driver-photo">
+                        <img src="photo/${id}.jpg" alt="${name}" onerror="this.parentElement.innerHTML='🏎️';">
+                    </div>
                     <div class="driver-stats">
                         <div class="stat-row"><span class="stat-label">Сезоны:</span><span class="stat-value">${seasons}</span></div>
                         <div class="stat-row"><span class="stat-label">Гран-при:</span><span class="stat-value">${grandsPrix}</span></div>
@@ -461,22 +478,37 @@
         }
 
         // Фильтрация
-        function applyFilters() {
-            const teamFilter = document.getElementById('filter-team').value.toLowerCase();
-            const championFilter = document.getElementById('filter-champion').value;
-            const seasonsFilter = parseInt(document.getElementById('filter-seasons').value) || 0;
+function applyFilters() {
+    const teamFilter = document.getElementById('filter-team').value.toLowerCase();
+    const championFilter = document.getElementById('filter-champion').value;
+    const seasonsFilter = parseInt(document.getElementById('filter-seasons').value) || 0;
 
-            const filtered = driversData.filter(driver => {
-                const [_, __, ___, seasons, ____, _____, ______, _______, ________, titles, _________, teams] = driver;
-                let match = true;
-                if (teamFilter && !teams.toLowerCase().includes(teamFilter)) match = false;
-                if (championFilter !== '' && (parseInt(titles) > 0 ? '1' : '0') !== championFilter) match = false;
-                if (parseInt(seasons) < seasonsFilter) match = false;
-                return match;
-            });
+    const filtered = driversData.filter(driver => {
+        const [
+            number, name, id, currentTeam, seasons, grandsPrix, points,
+            wins, podiums, poles, titles, dnf, allTeams
+        ] = driver;
 
-            renderDrivers(filtered);
+        if (teamFilter && !currentTeam.toLowerCase().includes(teamFilter)) {
+            return false;
         }
+
+        if (championFilter !== '') {
+            const isChampion = parseInt(titles) > 0 ? '1' : '0';
+            if (isChampion !== championFilter) {
+                return false;
+            }
+        }
+
+        if (parseInt(seasons) < seasonsFilter) {
+            return false;
+        }
+
+        return true;
+    });
+
+    renderDrivers(filtered);
+}
 
         // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
