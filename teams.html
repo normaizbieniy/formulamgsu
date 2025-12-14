@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Команды Формулы 1</title>
+    <style>
+        /* Глобальные стили — как в index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #000000;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1568413848532-5f0d371dea60?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        /* Шапка */
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid #e10600;
+            margin-bottom: 1.5rem;
+        }
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(225, 6, 0, 0.7);
+            background: linear-gradient(to right, #e10600, #ffc72c, #e10600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Навигация */
+        nav {
+            background-color: #0a0a0a;
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        nav a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #e10600;
+            transition: width 0.3s;
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        nav a:hover,
+        nav a.active {
+            color: #e10600;
+        }
+
+        /* Основной контент */
+        main {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin: 2rem 0 1.5rem;
+            color: #e10600;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #ffc72c;
+            margin: 0.5rem auto;
+        }
+
+        /* Сетка команд */
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Карточка команды */
+        .team-card {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #333;
+            position: relative;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(225, 6, 0, 0.3);
+            border-color: #e10600;
+        }
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #e10600, #ffc72c);
+        }
+        .team-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(20, 20, 20, 0.8);
+            border-bottom: 1px solid #333;
+        }
+        .team-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        .team-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ffc72c;
+        }
+        .team-info {
+            padding: 1.2rem;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed #333;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        .info-value {
+            font-weight: bold;
+            color: #e10600;
+        }
+
+        /* Пилоты */
+        .drivers-list {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(40, 40, 40, 0.7);
+            border-radius: 6px;
+            border-left: 3px solid #e10600;
+        }
+        .driver-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .driver-item:last-child {
+            border-bottom: none;
+        }
+        .driver-number {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffc72c;
+            margin-right: 0.8rem;
+            min-width: 30px;
+            text-align: center;
+        }
+        .driver-name {
+            flex-grow: 1;
+        }
+
+        /* Партнеры */
+        .partners-section {
+            background-color: #0a0a0a;
+            padding: 2.5rem 0;
+            border-top: 1px solid #333;
+            margin-top: 3rem;
+        }
+        .partners-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        .partner-logo {
+            height: 80px;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.3s;
+            border: 1px solid #333;
+        }
+        .partner-logo:hover {
+            background-color: #e10600;
+            transform: scale(1.05);
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #000;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 2px solid #e10600;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                font-size: 1rem;
+            }
+            .teams-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <h1 class="main-title">Formula 1</h1>
+    </header>
+
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="drivers.html">Пилоты</a></li>
+                <li><a href="teams.html" class="active">Команды</a></li>
+                <li><a href="history.html">История</a></li>
+                <li><a href="schedule.html">Календарь</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main>
+
+        <!-- Состав 2026 года -->
+        <h2 class="section-title">Команды Формулы 1 — 2026</h2>
+        <div class="teams-grid">
+
+            <!-- 1 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇦🇹</div><div class="team-name">BWT Alpine F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Alpine</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">A526</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">10</span><span class="driver-name">Пьер Гасли</span></div>
+                        <div class="driver-item"><span class="driver-number">43</span><span class="driver-name">Франко Колапинто</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇬🇧</div><div class="team-name">Aston Martin Aramco Honda F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Aston Martin Aramco</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">AMR26</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Honda</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">14</span><span class="driver-name">Фернандо Алонсо</span></div>
+                        <div class="driver-item"><span class="driver-number">18</span><span class="driver-name">Ланс Стролл</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇩🇪</div><div class="team-name">Revolut Audi F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Audi</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">R26</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Audi</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">5</span><span class="driver-name">Габриэль Бортолето</span></div>
+                        <div class="driver-item"><span class="driver-number">27</span><span class="driver-name">Нико Хюлькенберг</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇺🇸</div><div class="team-name">Cadillac Formula 1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Cadillac</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">БОП</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Ferrari</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">11</span><span class="driver-name">Серхио Перес</span></div>
+                        <div class="driver-item"><span class="driver-number">77</span><span class="driver-name">Валттери Боттас</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇮🇹</div><div class="team-name">Scuderia Ferrari HP</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Ferrari</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">БОП</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Ferrari</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">16</span><span class="driver-name">Шарль Леклер</span></div>
+                        <div class="driver-item"><span class="driver-number">44</span><span class="driver-name">Льюис Хэмилтон</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇺🇸</div><div class="team-name">TGR Haas F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Haas</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">VF-26</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Ferrari</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">31</span><span class="driver-name">Эстебан Окон</span></div>
+                        <div class="driver-item"><span class="driver-number">87</span><span class="driver-name">Оливер Берман</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 7 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇬🇧</div><div class="team-name">McLaren Mastercard F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">McLaren</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">MCL40A</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">4</span><span class="driver-name">Ландо Норрис</span></div>
+                        <div class="driver-item"><span class="driver-number">81</span><span class="driver-name">Оскар Пиастри</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 8 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇩🇪</div><div class="team-name">Mercedes-AMG Petronas F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Mercedes</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">БОП</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">12</span><span class="driver-name">Андреа Кими Антонелли</span></div>
+                        <div class="driver-item"><span class="driver-number">63</span><span class="driver-name">Джордж Расселл</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 9 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇮🇹</div><div class="team-name">Visa Cash App Racing Bulls F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Racing Bulls</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">БОП</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Red Bull Ford</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">30</span><span class="driver-name">Лиам Лоусон</span></div>
+                        <div class="driver-item"><span class="driver-number">41</span><span class="driver-name">Арвид Линдблад</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 10 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇦🇹</div><div class="team-name">Oracle Red Bull Racing</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Red Bull Racing</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">RB22</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Red Bull Ford</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">6</span><span class="driver-name">Исаак Хаджар</span></div>
+                        <div class="driver-item"><span class="driver-number">33</span><span class="driver-name">Макс Ферстаппен</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 11 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇬🇧</div><div class="team-name">Atlassian Williams F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Williams</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">FW48</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">23</span><span class="driver-name">Александр Албон</span></div>
+                        <div class="driver-item"><span class="driver-number">55</span><span class="driver-name">Карлос Сайнс</span></div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Состав 2025 года -->
+        <h2 class="section-title">Команды Формулы 1 — 2025</h2>
+        <div class="teams-grid">
+
+            <!-- 1 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇦🇹</div><div class="team-name">BWT Alpine F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Alpine</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">A525</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Renault</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">10</span><span class="driver-name">Пьер Гасли</span></div>
+                        <div class="driver-item"><span class="driver-number">31</span><span class="driver-name">Эстебан Окон</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇬🇧</div><div class="team-name">Aston Martin Aramco F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Aston Martin Aramco</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">AMR25</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">14</span><span class="driver-name">Фернандо Алонсо</span></div>
+                        <div class="driver-item"><span class="driver-number">18</span><span class="driver-name">Ланс Стролл</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇮🇹</div><div class="team-name">Scuderia Ferrari HP</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Ferrari</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">SF-25</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Ferrari</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">16</span><span class="driver-name">Шарль Леклер</span></div>
+                        <div class="driver-item"><span class="driver-number">55</span><span class="driver-name">Карлос Сайнс</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇺🇸</div><div class="team-name">MoneyGram Haas F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Haas</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">VF-25</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Ferrari</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">4</span><span class="driver-name">Эстебан Окон</span></div>
+                        <div class="driver-item"><span class="driver-number">87</span><span class="driver-name">Оливер Берман</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇬🇧</div><div class="team-name">McLaren Formula 1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">McLaren</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">MCL39</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">4</span><span class="driver-name">Ландо Норрис</span></div>
+                        <div class="driver-item"><span class="driver-number">81</span><span class="driver-name">Оскар Пиастри</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇩🇪</div><div class="team-name">Mercedes-AMG Petronas F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Mercedes</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">F1 W16</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">12</span><span class="driver-name">Кими Антонелли</span></div>
+                        <div class="driver-item"><span class="driver-number">63</span><span class="driver-name">Джордж Расселл</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 7 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇮🇹</div><div class="team-name">Visa Cash App Racing Bulls F1 Team</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Racing Bulls</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">VCARB 02</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Honda RBPT</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">6</span><span class="driver-name">Исаак Хаджар</span></div>
+                        <div class="driver-item"><span class="driver-number">22</span><span class="driver-name">Юки Цунода</span></div>
+                        <div class="driver-item"><span class="driver-number">30</span><span class="driver-name">Лиам Лоусон</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 8 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇦🇹</div><div class="team-name">Oracle Red Bull Racing</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Red Bull</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">RB21</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Honda RBPT</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">1</span><span class="driver-name">Макс Ферстаппен</span></div>
+                        <div class="driver-item"><span class="driver-number">22</span><span class="driver-name">Юки Цунода</span></div>
+                        <div class="driver-item"><span class="driver-number">30</span><span class="driver-name">Лиам Лоусон</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 9 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇨🇭</div><div class="team-name">Stake F1 Team Kick Sauber</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Kick Sauber</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">C45</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Ferrari</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">5</span><span class="driver-name">Габриэль Бортолето</span></div>
+                        <div class="driver-item"><span class="driver-number">27</span><span class="driver-name">Нико Хюлькенберг</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 10 -->
+            <article class="team-card">
+                <div class="team-header"><div class="team-logo">🇬🇧</div><div class="team-name">Allassian Williams Racing</div></div>
+                <div class="team-info">
+                    <div class="info-row"><span class="info-label">Конструктор:</span><span class="info-value">Williams</span></div>
+                    <div class="info-row"><span class="info-label">Шасси:</span><span class="info-value">FW47</span></div>
+                    <div class="info-row"><span class="info-label">Силовая установка:</span><span class="info-value">Mercedes</span></div>
+                    <div class="drivers-list">
+                        <div class="driver-item"><span class="driver-number">23</span><span class="driver-name">Александр Албон</span></div>
+                        <div class="driver-item"><span class="driver-number">55</span><span class="driver-name">Карлос Сайнс</span></div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Партнеры -->
+    <section class="partners-section">
+        <div class="partners-container">
+            <h2 class="section-title">Официальные партнеры</h2>
+            <div class="partners-grid">
+                <div class="partner-logo">Pirelli</div>
+                <div class="partner-logo">Rolex</div>
+                <div class="partner-logo">DHL</div>
+                <div class="partner-logo">AWS</div>
+                <div class="partner-logo">Heineken</div>
+                <div class="partner-logo">Aramco</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>© 2025 Formula 1 MGSU Project | Неофициальный фан-сайт | Прянишникова К.Е.</p>
+        <p>Соломатина А.И. | Мещерякова Д.Е. | Клишев К.Е. | Киселев А.М.</p>
+    </footer>
+</body>
+</html>

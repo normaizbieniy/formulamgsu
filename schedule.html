@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь Формулы 1 2026</title>
+    <style>
+        /* Глобальные стили — как в index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #000000;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1568413848532-5f0d371dea60?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+        /* Шапка */
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid #e10600;
+            margin-bottom: 1.5rem;
+        }
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(225, 6, 0, 0.7);
+            background: linear-gradient(to right, #e10600, #ffc72c, #e10600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        /* Навигация */
+        nav {
+            background-color: #0a0a0a;
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        nav a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #e10600;
+            transition: width 0.3s;
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        nav a:hover,
+        nav a.active {
+            color: #e10600;
+        }
+        /* Основной контент */
+        main {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin: 2rem 0 1.5rem;
+            color: #e10600;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #ffc72c;
+            margin: 0.5rem auto;
+        }
+        /* Таблица */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        .schedule-table th,
+        .schedule-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        .schedule-table th {
+            background: rgba(20, 20, 20, 0.95);
+            color: #ffc72c;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        .schedule-table tr:hover {
+            background: rgba(225, 6, 0, 0.1);
+        }
+        .track-link {
+            color: #ffc72c;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .track-link:hover {
+            color: #e10600;
+            text-decoration: underline;
+        }
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #000;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 2px solid #e10600;
+        }
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                font-size: 1rem;
+            }
+            .schedule-table th,
+            .schedule-table td {
+                padding: 0.6rem 0.3rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <h1 class="main-title">Formula 1</h1>
+    </header>
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="drivers.html">Пилоты</a></li>
+                <li><a href="teams.html">Команды</a></li>
+                <li><a href="history.html">История</a></li>
+                <li><a href="schedule.html" class="active">Расписание 2026</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Основной контент -->
+    <main>
+        <h2 class="section-title">Календарь Формулы 1 — 2026</h2>
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Гран-при</th>
+                    <th>Трасса</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>6–8 марта</td><td>Австралия</td><td><a href="tracks/melbourne.html" class="track-link">Мельбурн</a></td></tr>
+                <tr><td>13–15 марта</td><td>Китай</td><td><a href="tracks/shanghai.html" class="track-link">Шанхай</a></td></tr>
+                <tr><td>27–29 марта</td><td>Япония</td><td><a href="tracks/suzuka.html" class="track-link">Сузука</a></td></tr>
+                <tr><td>10–12 апреля</td><td>Бахрейн</td><td><a href="tracks/sakhir.html" class="track-link">Сахир</a></td></tr>
+                <tr><td>17–19 апреля</td><td>Саудовская Аравия</td><td><a href="tracks/jeddah.html" class="track-link">Джидда</a></td></tr>
+                <tr><td>1–3 мая</td><td>США</td><td><a href="tracks/miami.html" class="track-link">Майами</a></td></tr>
+                <tr><td>22–24 мая</td><td>Канада</td><td><a href="tracks/montreal.html" class="track-link">Монреаль</a></td></tr>
+                <tr><td>5–7 июня</td><td>Монако</td><td><a href="tracks/monaco.html" class="track-link">Монте-Карло</a></td></tr>
+                <tr><td>12–14 июня</td><td>Испания</td><td><a href="tracks/barcelona.html" class="track-link">Барселона</a></td></tr>
+                <tr><td>26–28 июня</td><td>Австрия</td><td><a href="tracks/spielberg.html" class="track-link">Шпильберг</a></td></tr>
+                <tr><td>3–5 июля</td><td>Великобритания</td><td><a href="tracks/silverstone.html" class="track-link">Сильверстоун</a></td></tr>
+                <tr><td>17–19 июля</td><td>Бельгия</td><td><a href="tracks/spa.html" class="track-link">Спа</a></td></tr>
+                <tr><td>24–26 июля</td><td>Венгрия</td><td><a href="tracks/budapest.html" class="track-link">Будапешт</a></td></tr>
+                <tr><td>21–23 августа</td><td>Нидерланды</td><td><a href="tracks/zandvoort.html" class="track-link">Зандворт</a></td></tr>
+                <tr><td>4–6 сентября</td><td>Италия</td><td><a href="tracks/monza.html" class="track-link">Монца</a></td></tr>
+                <tr><td>11–13 сентября</td><td>Испания</td><td><a href="tracks/madrid.html" class="track-link">Мадрид</a></td></tr>
+                <tr><td>25–27 сентября</td><td>Азербайджан</td><td><a href="tracks/baku.html" class="track-link">Баку</a></td></tr>
+                <tr><td>9–11 октября</td><td>Сингапур</td><td><a href="tracks/singapore.html" class="track-link">Марина-Бей</a></td></tr>
+                <tr><td>23–25 октября</td><td>США</td><td><a href="tracks/austin.html" class="track-link">Остин</a></td></tr>
+                <tr><td>30 октября – 1 ноября</td><td>Мексика</td><td><a href="tracks/mexico.html" class="track-link">Мехико</a></td></tr>
+                <tr><td>6–8 ноября</td><td>Бразилия</td><td><a href="tracks/saopaulo.html" class="track-link">Сан-Паулу</a></td></tr>
+                <tr><td>19–21 ноября</td><td>США</td><td><a href="tracks/lasvegas.html" class="track-link">Лас-Вегас</a></td></tr>
+                <tr><td>27–29 ноября</td><td>Катар</td><td><a href="tracks/lusail.html" class="track-link">Лусаил</a></td></tr>
+                <tr><td>4–6 декабря</td><td>Абу-Даби</td><td><a href="tracks/yasmarina.html" class="track-link">Яс-Марина</a></td></tr>
+            </tbody>
+        </table>
+    </main>
+    <!-- Футер -->
+    <footer>
+        <p>© 2025 Formula 1 MGSU Project | Неофициальный фан-сайт | Прянишникова К.Е.</p>
+        <p>Соломатина А.И. | Мещерякова Д.Е. | Клишев К.Е. | Киселев А.М.</p>
+    </footer>
+</body>
+</html>

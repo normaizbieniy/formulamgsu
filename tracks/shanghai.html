@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Трасса Шанхай — Китай</title>
+    <style>
+        /* Глобальные стили — как в index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #000;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1568413848532-5f0d371dea60?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid #e10600;
+            margin-bottom: 1.5rem;
+        }
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #e10600, #ffc72c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        nav {
+            background-color: #0a0a0a;
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        nav a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s;
+            color: #fff;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #e10600;
+            transition: width 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        nav a:hover {
+            color: #e10600;
+        }
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+        .track-hero {
+            width: 100%;
+            border-radius: 8px;
+            margin: 1.5rem 0 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            border: 2px solid #333;
+        }
+        .track-info {
+            background: rgba(30, 30, 30, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #e10600;
+        }
+        .info-row {
+            display: flex;
+            margin: 0.8rem 0;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #ffc72c;
+            min-width: 180px;
+        }
+        .info-value {
+            color: #ddd;
+        }
+        .track-description {
+            margin: 1.5rem 0;
+            line-height: 1.8;
+            color: #bbb;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #000;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 2px solid #e10600;
+            margin-top: 3rem;
+        }
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.5rem; }
+            .info-label { min-width: 140px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="main-title">Шанхай — Китай</h1>
+    </header>
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="../index.html">Главная</a></li>
+                <li><a href="../drivers.html">Пилоты</a></li>
+                <li><a href="../teams.html">Команды</a></li>
+                <li><a href="../history.html">История</a></li>
+                <li><a href="../schedule.html">Календарь</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <img src="../photo/shanghai.jpg" alt="Трасса Шанхай" class="track-hero">
+        <div class="track-info">
+            <div class="info-row"><span class="info-label">Страна:</span><span class="info-value">Китай</span></div>
+            <div class="info-row"><span class="info-label">Длина круга:</span><span class="info-value">5.451 км</span></div>
+            <div class="info-row"><span class="info-label">Количество кругов:</span><span class="info-value">56</span></div>
+            <div class="info-row"><span class="info-label">Дистанция гонки:</span><span class="info-value">305.066 км</span></div>
+            <div class="info-row"><span class="info-label">Рекорд круга:</span><span class="info-value">1:32.238 — Михаэль Шумахер (2004)</span></div>
+            <div class="info-row"><span class="info-label">Первый Гран-при:</span><span class="info-value">1996</span></div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2025 Formula 1 MGSU Project | Неофициальный фан-сайт</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История Формулы 1</title>
+    <style>
+        /* Глобальные стили — как в index.html и drivers.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #000000;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1568413848532-5f0d371dea60?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        /* Шапка */
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid #e10600;
+            margin-bottom: 1.5rem;
+        }
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(225, 6, 0, 0.7);
+            background: linear-gradient(to right, #e10600, #ffc72c, #e10600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Навигация */
+        nav {
+            background-color: #0a0a0a;
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        nav a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #e10600;
+            transition: width 0.3s;
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        nav a:hover,
+        nav a.active {
+            color: #e10600;
+        }
+
+        /* Основной контент */
+        main {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin: 2rem 0 1.5rem;
+            color: #e10600;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #ffc72c;
+            margin: 0.5rem auto;
+        }
+
+        .history-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+        }
+        .history-text p {
+            margin-bottom: 1.5rem;
+        }
+        .history-text h3 {
+            color: #e10600;
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        .history-text ul {
+            margin: 1rem 0 1.5rem 2rem;
+            padding-left: 1rem;
+        }
+        .history-text li {
+            margin-bottom: 0.6rem;
+        }
+        .highlight {
+            color: #ffc72c;
+            font-weight: bold;
+        }
+        .era-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0 2rem;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 3px solid #e10600;
+        }
+        .era-item {
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .era-decade {
+            color: #ffc72c;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Партнеры (по аналогии с другими страницами) */
+        .partners-section {
+            background-color: #0a0a0a;
+            padding: 2.5rem 0;
+            border-top: 1px solid #333;
+            margin-top: 3rem;
+        }
+        .partners-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        .partner-logo {
+            height: 80px;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.3s;
+            border: 1px solid #333;
+        }
+        .partner-logo:hover {
+            background-color: #e10600;
+            transform: scale(1.05);
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #000;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 2px solid #e10600;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                font-size: 1rem;
+            }
+            .era-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <h1 class="main-title">Formula 1</h1>
+    </header>
+
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="drivers.html">Пилоты</a></li>
+                <li><a href="teams.html">Команды</a></li>
+                <li><a href="history.html" class="active">История</a></li>
+                <li><a href="schedule.html">Календарь</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main>
+        <h2 class="section-title">История Формулы 1</h2>
+        <div class="history-text">
+            <p>Формула-1 — это не просто автоспорт. Это настоящая история технологий, скорости, человеческого мастерства и страсти. Начавшись как серия индивидуальных гонок в середине XX века, Формула-1 со временем превратилась в глобальный чемпионат, который охватывает весь мир, собирает миллионы зрителей и привлекает ведущие автомобильные компании и инженеров.</p>
+            <p>Сегодня Формула-1 — это не только спорт, но и шоу, наука и бизнес. Поклонники следят за каждым этапом и анализируют технические характеристики машин, погоду и тактику команд.</p>
+
+            <h3>Зарождение Формулы-1 (1950-е)</h3>
+            <p>Формула-1 как официальный чемпионат мира появилась в 1950 году под эгидой FIA. Первый Гран-при прошёл в Сильверстоуне, а победителем стал итальянец <span class="highlight">Джузеппе Фарина</span> на Alfa Romeo.</p>
+            <ul>
+                <li>Машины были простыми, с минимальной аэродинамикой</li>
+                <li>Практически отсутствовала безопасность</li>
+                <li>Доминировали итальянские команды: Alfa Romeo, Maserati, Ferrari</li>
+            </ul>
+            <p>В 1950-х началась легендарная карьера <span class="highlight">Хуана-Мануэля Фанхио</span> — пятикратного чемпиона мира.</p>
+
+            <h3>Технологическое развитие (1960-е)</h3>
+            <p>1960-е стали поворотным моментом: появились монококи, заднемоторные болиды и аэродинамические элементы. Британские команды — Lotus, BRM, McLaren — вышли на первый план.</p>
+            <ul>
+                <li>Заднемоторная компоновка улучшила управляемость</li>
+                <li>Team Lotus внедрила спойлеры и инновационную подвеску</li>
+                <li>Рост скорости сопровождался трагедиями: десятки пилотов погибли</li>
+            </ul>
+            <p>Героями десятилетия стали <span class="highlight">Джим Кларк</span>, <span class="highlight">Джек Брэбем</span> и <span class="highlight">Грэм Хилл</span>.</p>
+
+            <h3>Безопасность и коммерция (1970–1980-е)</h3>
+            <p>С 1970-х безопасность стала приоритетом. Появились заграждения, песчаные ловушки, медицинская служба.</p>
+            <ul>
+                <li>Профессиональные команды: Ferrari, Williams, McLaren</li>
+                <li>Экспансия в США, Южную Америку, Японию</li>
+                <li>Формула-1 стала телевизионным шоу благодаря Берни Экклстоуну</li>
+                <li>Турбонаддув, карбоновые шасси, электроника</li>
+            </ul>
+            <p>Эпоха великих дуэлей: <span class="highlight">Ален Прост</span> против <span class="highlight">Айртона Сенны</span>.</p>
+
+            <h3>Золотая эра и трагедия Имолы (1990-е)</h3>
+            <p>Начало 1990-х — «золотая эра». Но 1994 год навсегда останется трагическим: погибли <span class="highlight">Роланд Ратценбергер</span> и <span class="highlight">Айртон Сенна</span>.</p>
+            <ul>
+                <li>Революция в безопасности: HANS, укреплённые шлемы, реконструкция трасс</li>
+                <li>Михаэль Шумахер начинает доминировать</li>
+                <li>Формула-1 становится глобальным явлением</li>
+            </ul>
+
+            <h3>Гибридная эра (2000–2020-е)</h3>
+            <ul>
+                <li>2000–2006: доминирование Шумахера и Ferrari</li>
+                <li>2009: внедрение KERS (рекуперация энергии)</li>
+                <li>2014: гибридные V6-моторы → эра Mercedes и Хэмилтона</li>
+                <li>2018: появление Halo — защита кокпита</li>
+                <li>2021: «потолок затрат» и спринт-гонки</li>
+            </ul>
+            <p>Новые трассы (Лас-Вегас, Джидда), рост популярности благодаря сериалу <span class="highlight">«Drive to Survive»</span>.</p>
+
+            <h3>Этапы становления чемпионов</h3>
+            <div class="era-list">
+                <div class="era-item"><span class="era-decade">1950-е</span> Фанхио, Мосс</div>
+                <div class="era-item"><span class="era-decade">1960-е</span> Кларк, Стюарт</div>
+                <div class="era-item"><span class="era-decade">1970-е</span> Лауда, Хант</div>
+                <div class="era-item"><span class="era-decade">1980-е</span> Прост, Сенна, Пике</div>
+                <div class="era-item"><span class="era-decade">1990-е</span> Шумахер, Хаккинен</div>
+                <div class="era-item"><span class="era-decade">2000-е</span> Шумахер, Алонсо, Райкконен</div>
+                <div class="era-item"><span class="era-decade">2010-е</span> Феттель, Хэмилтон</div>
+                <div class="era-item"><span class="era-decade">2020-е</span> Ферстаппен</div>
+            </div>
+
+            <p><strong>Заключение:</strong> История Формулы-1 — это путь от опасных трасс к высокотехнологичному, регулируемому и зрелищному чемпионату. Но дух остаётся неизменным: борьба мужества, техники и интеллекта, где каждый поворот может стать частью истории.</p>
+        </div>
+    </main>
+
+    <!-- Партнеры -->
+    <section class="partners-section">
+        <div class="partners-container">
+            <h2 class="section-title">Официальные партнеры</h2>
+            <div class="partners-grid">
+                <div class="partner-logo">Pirelli</div>
+                <div class="partner-logo">Rolex</div>
+                <div class="partner-logo">DHL</div>
+                <div class="partner-logo">AWS</div>
+                <div class="partner-logo">Heineken</div>
+                <div class="partner-logo">Aramco</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>© 2025 Formula 1 MGSU Project | Неофициальный фан-сайт | Прянишникова К.Е.</p>
+        <p>Соломатина А.И. | Мещерякова Д.Е. | Клишев К.Е. | Киселев А.М.</p>
+    </footer>
+</body>
+</html>

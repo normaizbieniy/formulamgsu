@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пилоты Формулы 1</title>
+    <style>
+        /* Глобальные стили (идентичны index.html) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #000000;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1568413848532-5f0d371dea60?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+        /* Шапка сайта */
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid #e10600;
+            margin-bottom: 1.5rem;
+        }
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(225, 6, 0, 0.7);
+            background: linear-gradient(to right, #e10600, #ffc72c, #e10600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        /* Навигация */
+        nav {
+            background-color: #0a0a0a;
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        nav a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #e10600;
+            transition: width 0.3s;
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        nav a:hover,
+        nav a.active {
+            color: #e10600;
+        }
+
+        /* Фильтры */
+        .filters-section {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 1.5rem;
+        }
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffc72c;
+            font-weight: bold;
+        }
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(30, 30, 30, 0.9);
+            border: 1px solid #333;
+            color: white;
+            border-radius: 4px;
+        }
+
+        /* Основной контент */
+        main {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin: 2rem 0 1.5rem;
+            color: #e10600;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #ffc72c;
+            margin: 0.5rem auto;
+        }
+        /* Карточки пилотов */
+        .drivers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .driver-card {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #333;
+            position: relative;
+        }
+        .driver-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(225, 6, 0, 0.3);
+            border-color: #e10600;
+        }
+        .driver-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #e10600, #ffc72c);
+        }
+        .driver-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(20, 20, 20, 0.8);
+            border-bottom: 1px solid #333;
+        }
+        .driver-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e10600;
+            margin-right: 1rem;
+            min-width: 60px;
+            text-align: center;
+        }
+        .driver-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ffc72c;
+        }
+        .driver-team {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+        .driver-photo {
+            height: 180px;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        .driver-stats {
+            padding: 1.2rem;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #333;
+        }
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .stat-value {
+            font-weight: bold;
+            color: #e10600;
+            text-align: right;
+        }
+        /* Партнеры */
+        .partners-section {
+            background-color: #0a0a0a;
+            padding: 2.5rem 0;
+            border-top: 1px solid #333;
+            margin-top: 3rem;
+        }
+        .partners-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        .partner-logo {
+            height: 80px;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.3s;
+            border: 1px solid #333;
+        }
+        .partner-logo:hover {
+            background-color: #e10600;
+            transform: scale(1.05);
+        }
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #000;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 2px solid #e10600;
+        }
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                font-size: 1rem;
+            }
+            .drivers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <h1 class="main-title">Formula 1</h1>
+    </header>
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="drivers.html" class="active">Пилоты</a></li>
+                <li><a href="teams.html">Команды</a></li>
+                <li><a href="schedule.html">Календарь</a></li>
+                <li><a href="records.html">Рекорды</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Фильтры -->
+    <section class="filters-section">
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label for="filter-team">Фильтр по команде:</label>
+                <select id="filter-team">
+                    <option value="">Все команды</option>
+                    <option value="Ferrari">Ferrari</option>
+                    <option value="Mercedes">Mercedes</option>
+                    <option value="Red Bull">Red Bull</option>
+                    <option value="McLaren">McLaren</option>
+                    <option value="Alpine">Alpine</option>
+                    <option value="Aston Martin">Aston Martin</option>
+                    <option value="Haas">Haas</option>
+                    <option value="Williams">Williams</option>
+                    <option value="Racing Bulls">Racing Bulls</option>
+                    <option value="Kick Sauber">Kick Sauber</option>
+                    <!-- Добавьте другие при необходимости -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-champion">Фильтр по чемпионству:</label>
+                <select id="filter-champion">
+                    <option value="">Все пилоты</option>
+                    <option value="1">Чемпионы</option>
+                    <option value="0">Не чемпионы</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-seasons">Минимум сезонов:</label>
+                <input type="number" id="filter-seasons" min="0" max="30" placeholder="0">
+            </div>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <main>
+        <h2 class="section-title">Пилоты Формулы 1</h2>
+        <div class="drivers-grid" id="drivers-container">
+            <!-- Пилоты будут вставлены сюда через JS -->
+        </div>
+    </main>
+
+    <!-- Партнеры -->
+    <section class="partners-section">
+        <div class="partners-container">
+            <h2 class="section-title">Официальные партнеры</h2>
+            <div class="partners-grid">
+                <div class="partner-logo">Pirelli</div>
+                <div class="partner-logo">Rolex</div>
+                <div class="partner-logo">DHL</div>
+                <div class="partner-logo">AWS</div>
+                <div class="partner-logo">Heineken</div>
+                <div class="partner-logo">Aramco</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>© 2025 Formula 1 MGSU Project | Неофициальный фан-сайт | Прянишникова К.Е.</p>
+        <p>Соломатина А.И. | Мещерякова Д.Е. | Клишев К.Е. | Киселев А.М.</p>
+    </footer>
+
+    <!-- JavaScript для фильтрации -->
+    <script>
+        const driversData = [
+            // Формат: [номер, имя, команда, сезоны, этапы, очки, победы, подиумы, поулы, титулы, ДНФ, команды (полные)]
+            [24, "Чжоу Гуаньюй", "Alfa Romeo / Kick Sauber", "4", "69", "16", "0", "0", "0", "0", "8", "Alfa Romeo, Stake F1 Team Kick Sauber"],
+            [30, "Ник де Врис", "Williams / AlphaTauri", "2", "11", "2", "0", "0", "0", "0", "2", "Williams, Scuderia AlphaTauri"],
+            [81, "Оскар Пиастри", "McLaren", "3", "70", "799", "9", "26", "6", "0", "4", "McLaren, BWT Alpine Formula One Team"],
+            [30, "Лиам Лоусон", "Racing Bulls", "3", "35", "44", "0", "0", "0", "0", "6", "Scuderia AlphaTauri, Visa Cash App RB, Oracle Red Bull Racing, Visa Cash App Racing Bulls"],
+            [2, "Логан Сарджент", "Williams", "2", "36", "1", "0", "0", "0", "0", "7", "Williams Racing"],
+            [87, "Оливер Берман", "Haas", "2", "27", "48", "0", "0", "0", "0", "3", "Scuderia Ferrari, Haas F1 Team"],
+            [7, "Джек Дуэн", "Alpine", "2", "7", "0", "0", "0", "0", "0", "2", "Alpine"],
+            [43, "Франко Колапинто", "Alpine", "2", "27", "5", "0", "0", "0", "0", "3", "Williams, Alpine"],
+            [12, "Андреа Кими Антонелли", "Mercedes", "1", "24", "150", "0", "3", "0", "0", "4", "Mercedes"],
+            [6, "Исак Хаджар", "Racing Bulls", "1", "23", "51", "0", "1", "0", "0", "2", "Visa Cash App Racing Bulls"],
+            [5, "Габриэль Бортолето", "Kick Sauber", "1", "24", "19", "0", "0", "0", "0", "5", "Stake F1 Team Kick Sauber"],
+            [6, "Нико Росберг", "Mercedes", "11", "206", "1594.5", "23", "57", "30", "1", "37", "Williams, Mercedes"],
+            [19, "Фелипе Масса", "Ferrari", "15", "272", "1167", "11", "41", "16", "0", "57", "Sauber, Ferrari, Williams"],
+            [22, "Дженсон Баттон", "McLaren", "18", "309", "1235", "15", "50", "8", "1", "88", "Williams, Benetton, Renault, BAR, Honda, Brawn GP, McLaren"],
+            [13, "Пастор Мальдонадо", "Williams", "5", "90", "76", "1", "0", "1", "0", "33", "Williams, Lotus"],
+            [28, "Маркус Эрикссон", "Alfa Romeo", "5", "97", "18", "0", "0", "0", "0", "35", "Caterham, Sauber, Alfa Romeo"],
+            [0, "Фелипе Наср", "Sauber", "2", "40", "29", "0", "0", "0", "0", "6", "Sauber"],
+            [28, "Уилл Стивенс", "Manor", "2", "18", "0", "0", "0", "0", "0", "2", "Caterham, Manor Marussia"],
+            [0, "Роберто Мери", "Manor", "1", "13", "0", "0", "0", "0", "0", "1", "Manor Marussia"],
+            [0, "Александр Росси", "Manor", "1", "5", "0", "0", "0", "0", "0", "0", "Manor Marussia"],
+            [30, "Джолион Палмер", "Renault", "2", "35", "9", "0", "0", "0", "0", "7", "Renault"],
+            [2, "Стоффель Вандорн", "McLaren", "3", "42", "26", "0", "0", "0", "0", "7", "McLaren"],
+            [94, "Паскаль Верляйн", "Sauber", "2", "40", "6", "0", "0", "0", "0", "8", "Manor, Sauber"],
+            [88, "Рио Харьянто", "Manor", "1", "12", "0", "0", "0", "0", "0", "3", "Manor Racing"],
+            [21, "Эстебан Гутьеррес", "Haas", "3", "57", "6", "0", "0", "0", "0", "13", "Sauber, Haas"],
+            [44, "Льюис Хэмилтон", "Ferrari", "19", "380", "5018.5", "105", "202", "104", "7", "34", "McLaren, Mercedes, Ferrari"],
+            [77, "Вальтери Боттас", "Alfa Romeo", "12", "267", "1797", "10", "67", "20", "0", "25", "Williams, Mercedes, Alfa Romeo"],
+            [5, "Себастьян Феттель", "Aston Martin", "16", "307", "3098", "53", "122", "57", "4", "28", "BMW, Toro Rosso, Red Bull, Ferrari, Aston Martin"],
+            [16, "Шарль Леклер", "Ferrari", "8", "171", "1672", "8", "50", "27", "0", "23", "Alfa Romeo, Ferrari"],
+            [1, "Макс Ферстаппен", "Red Bull", "11", "233", "3444.5", "71", "127", "48", "4", "33", "Toro Rosso, Red Bull"],
+            [23, "Александр Албон", "Williams", "6", "129", "313", "0", "2", "0", "0", "22", "Toro Rosso, Red Bull Racing, Williams"],
+            [55, "Карлос Сайнс", "Williams", "11", "230", "1336.5", "4", "29", "6", "0", "42", "Toro Rosso, Renault, McLaren, Ferrari, Williams"],
+            [4, "Ландо Норрис", "McLaren", "7", "152", "1430", "11", "44", "16", "1", "13", "McLaren"],
+            [3, "Даниэль Риккардо", "RB", "14", "257", "1329", "8", "32", "3", "0", "35", "HRT, Toro Rosso, Red Bull, Renault, McLaren, RB"],
+            [31, "Эстебан Окон", "Haas", "9", "180", "483", "1", "4", "0", "0", "25", "Manor, Force India, Renault, Alpine, Haas"],
+            [26, "Даниил Квят", "AlphaTauri", "6", "112", "202", "0", "3", "0", "0", "20", "Toro Rosso, Red Bull, Scuderia AlphaTauri"],
+            [10, "Пьер Гасли", "Alpine", "9", "178", "458", "1", "5", "0", "0", "26", "Toro Rosso, Red Bull, AlphaTauri, Alpine"],
+            [11, "Серхио Перес", "Red Bull", "14", "283", "1638", "6", "39", "3", "0", "28", "Sauber, McLaren, Force India, Racing Point, Red Bull"],
+            [18, "Лэнс Стролл", "Aston Martin", "9", "192", "325", "0", "3", "1", "0", "31", "Williams, Racing Point, Aston Martin"],
+            [7, "Кими Райкконен", "Alfa Romeo", "19", "352", "1873", "21", "103", "18", "1", "71", "Sauber, McLaren, Ferrari, Lotus, Alfa Romeo"],
+            [99, "Антонио Джовинацци", "Alfa Romeo", "4", "62", "21", "0", "0", "0", "0", "6", "Sauber, Alfa Romeo"],
+            [8, "Роман Грожан", "Haas", "10", "181", "391", "0", "10", "0", "0", "50", "Renault, Lotus, Haas"],
+            [20, "Кевин Магнуссен", "Haas", "10", "186", "202", "0", "1", "0", "0", "35", "McLaren, Renault, Haas"],
+            [63, "Джордж Рассел", "Mercedes", "7", "152", "1033", "5", "24", "8", "0", "19", "Williams, Mercedes"],
+            [6, "Николас Латифи", "Williams", "3", "61", "9", "0", "0", "0", "0", "13", "Williams"],
+            [14, "Фернандо Алонсо", "Aston Martin", "22", "427", "2393", "32", "106", "22", "2", "83", "Minardi, Renault, McLaren, Ferrari, Alpine, Aston Martin"],
+            [22, "Юки Цунода", "Racing Bulls", "5", "111", "124", "0", "0", "0", "0", "15", "AlphaTauri, Racing Bulls, Red Bull"],
+            [9, "Никита Мазепин", "Haas", "1", "22", "0", "0", "0", "0", "0", "1", "Haas"],
+            [47, "Мик Шумахер", "Haas", "2", "44", "12", "0", "0", "0", "0", "5", "Haas"],
+            [27, "Нико Хюлькенберг", "Haas", "14", "251", "622", "0", "1", "1", "0", "44", "Williams, Force India, Sauber, Renault, Racing Point, Aston Martin, Haas"]
+        ];
+
+        function renderDrivers(filtered = driversData) {
+            const container = document.getElementById('drivers-container');
+            container.innerHTML = '';
+
+            filtered.forEach(driver => {
+                const [number, name, team, seasons, grandsPrix, points, wins, podiums, poles, titles, dnf, fullTeams] = driver;
+                const emoji = '🏎️'; // можно заменить на динамический выбор
+
+                const card = document.createElement('article');
+                card.className = 'driver-card';
+                card.dataset.team = fullTeams.toLowerCase();
+                card.dataset.champion = titles > 0 ? '1' : '0';
+                card.dataset.seasons = parseInt(seasons);
+
+                card.innerHTML = `
+                    <div class="driver-header">
+                        <div class="driver-number">${number || '–'}</div>
+                        <div>
+                            <div class="driver-name">${name}</div>
+                            <div class="driver-team">${team}</div>
+                        </div>
+                    </div>
+                    <div class="driver-photo">${emoji}</div>
+                    <div class="driver-stats">
+                        <div class="stat-row"><span class="stat-label">Сезоны:</span><span class="stat-value">${seasons}</span></div>
+                        <div class="stat-row"><span class="stat-label">Гран-при:</span><span class="stat-value">${grandsPrix}</span></div>
+                        <div class="stat-row"><span class="stat-label">Очки:</span><span class="stat-value">${points}</span></div>
+                        <div class="stat-row"><span class="stat-label">Победы:</span><span class="stat-value">${wins}</span></div>
+                        <div class="stat-row"><span class="stat-label">Подиумы:</span><span class="stat-value">${podiums}</span></div>
+                        <div class="stat-row"><span class="stat-label">Поулы:</span><span class="stat-value">${poles}</span></div>
+                        <div class="stat-row"><span class="stat-label">Титулы:</span><span class="stat-value">${titles}</span></div>
+                        <div class="stat-row"><span class="stat-label">ДНФ:</span><span class="stat-value">${dnf}</span></div>
+                        <div class="stat-row" style="flex-direction:column;align-items:flex-start;">
+                            <span class="stat-label">Команды:</span>
+                            <span class="stat-value" style="text-align:left;color:#aaa;font-size:0.85rem;">${fullTeams}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Фильтрация
+        function applyFilters() {
+            const teamFilter = document.getElementById('filter-team').value.toLowerCase();
+            const championFilter = document.getElementById('filter-champion').value;
+            const seasonsFilter = parseInt(document.getElementById('filter-seasons').value) || 0;
+
+            const filtered = driversData.filter(driver => {
+                const [_, __, ___, seasons, ____, _____, ______, _______, ________, titles, _________, teams] = driver;
+                let match = true;
+                if (teamFilter && !teams.toLowerCase().includes(teamFilter)) match = false;
+                if (championFilter !== '' && (parseInt(titles) > 0 ? '1' : '0') !== championFilter) match = false;
+                if (parseInt(seasons) < seasonsFilter) match = false;
+                return match;
+            });
+
+            renderDrivers(filtered);
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDrivers();
+            document.getElementById('filter-team').addEventListener('change', applyFilters);
+            document.getElementById('filter-champion').addEventListener('change', applyFilters);
+            document.getElementById('filter-seasons').addEventListener('input', applyFilters);
+        });
+    </script>
+</body>
+</html>

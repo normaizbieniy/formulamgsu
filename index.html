@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula 1 - Официальный Сайт</title>
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #000000;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1568413848532-5f0d371dea60?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+        
+        /* Шапка сайта */
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid #e10600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(225, 6, 0, 0.7);
+            background: linear-gradient(to right, #e10600, #ffc72c, #e10600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        
+        /* Навигация */
+        nav {
+            background-color: #0a0a0a;
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #e10600;
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: #e10600;
+        }
+
+        
+        /* Гифка */
+
+
+        .hero-section {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem 0;
+            margin-bottom: 2.5rem;
+        }
+        
+        .f1-gif {
+            max-width: 90%;
+            border: 2px solid #e10600;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(225, 6, 0, 0.5);
+            transition: transform 0.3s;
+        }
+        
+        .f1-gif:hover {
+            transform: scale(1.02);
+
+        }
+
+
+        
+        /* Новости */
+        .news-section {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #e10600;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #ffc72c;
+            margin: 0.5rem auto;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
+        
+        .news-card {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(225, 6, 0, 0.3);
+            border-color: #e10600;
+        }
+        
+        .news-img {
+            height: 180px;
+            background: linear-gradient(45deg, #e10600, #333);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .news-content {
+            padding: 1.2rem;
+        }
+        
+        .news-date {
+            color: #ffc72c;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #e10600;
+        }
+        
+        /* Партнеры */
+        .partners-section {
+            background-color: #0a0a0a;
+            padding: 2.5rem 0;
+            border-top: 1px solid #333;
+        }
+        
+        .partners-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        
+
+        .partner-logo:hover {
+            background-color: #e10600;
+            transform: scale(1.05);
+        }
+        
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #000;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 2px solid #e10600;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav a {
+                font-size: 1rem;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <h1 class="main-title">Formula 1</h1>
+    </header>
+    
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="index.html" class="active">Главная</a></li>
+                <li><a href="drivers.html">Пилоты</a></li>
+                <li><a href="teams.html">Команды</a></li>
+                <li><a href="history.html">История</a></li>
+                <li><a href="schedule.html">Расписание 2026</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Гифка -->
+    <section class="hero-section">
+        <img src="photo/f1togif.gif"
+             alt="Гонки Формулы 1" 
+             class="f1-gif"
+             width="1200"
+             height="650">
+    </section>
+    
+    <!-- Новости -->
+    <section class="news-section">
+        <h2 class="section-title">Актуальные новости</h2>
+        <div class="news-grid">
+            <!-- Новость 1 -->
+            <article class="news-card">
+                <div class="news-img">
+                    <span>🏎️</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">4 декабря 2025</span>
+                    <h3 class="news-title">Williams  заняли пятое место в Кубке Конструкторов Формулы-1 2025</h3>
+                    <p>Лучшая команда из средней группы, лучший результат за восемь лет! Поздравляем!</p>
+                </div>
+            </article>
+            
+            <!-- Новость 2 -->
+            <article class="news-card">
+                <div class="news-img">
+                    <span>🏁</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">3 декабря 2025</span>
+                    <h3 class="news-title">Новая трасса в Лас-Вегасе: детали обновленного маршрута</h3>
+                    <p>Организаторы представили модернизированную версию трассы с дополнительными зонами DRS и улучшенной инфраструктурой для зрителей...</p>
+                </div>
+            </article>
+            
+            <!-- Новость 3 -->
+            <article class="news-card">
+                <div class="news-img">
+                    <span>🔧</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">1 декабря 2025</span>
+                    <h3 class="news-title">Ferrari представила первый болид с новыми техрегламентами</h3>
+                    <p>Команда из Маранелло показала прототип машины на 2026 год с революционной аэродинамикой и гибридной силовой установкой...</p>
+                </div>
+            </article>
+        </div>
+    </section>
+    
+    <!-- Партнеры -->
+    <section class="partners-section">
+        <div class="partners-container">
+            <h2 class="section-title">Партнеры</h2>
+            <div class="partners-grid">
+                <div class="partner-logo"><img src="photo/pirelli.avif"></div>
+                <div class="partner-logo"><img src="photo/msc.avif"></div>
+                <div class="partner-logo"><img src="photo/dhl.avif"></div>
+                <div class="partner-logo"><img src="photo/crypto.com.avif"></div>
+                <div class="partner-logo"><img src="photo/q.avif"></div>
+                <div class="partner-logo"><img src="photo/aramco.avif"></div>
+                <div class="partner-logo"><img src="photo/lvmh.avif"></div>
+                <div class="partner-logo"><img src="photo/sa.avif"></div>
+                <div class="partner-logo"><img src="photo/lenovo.avif"></div>
+                <div class="partner-logo"><img src="photo/AWS.avif"></div>
+                <div class="partner-logo"><img src="photo/qatar.avif"></div>
+                <div class="partner-logo"><img src="photo/lou.avif"></div>
+                <div class="partner-logo"><img src="photo/TAG.avif"></div>
+                <div class="partner-logo"><img src="photo/moet.avif"></div> 
+                <div class="partner-logo"><img src="photo/Amex.avif"></div>
+                <div class="partner-logo"><img src="photo/sant.avif"></div>
+                <div class="partner-logo"><img src="photo/allwyn.avif"></div>
+
+
+            </div>
+            <p style="text-align: center; margin-top: 1.5rem; color: #aaa; font-style: italic;">
+                
+            </p>
+        </div>
+    </section>
+    
+    <!-- Футер -->
+    <footer>
+        <p>© 2025 Formula 1 MGSU Project | Неофициальный фан-сайт | Прянишникова К.Е.</p>
+        <p>Соломатина А.И. | Мещерякова Д.Е. | Клишев К.Е. | Киселев А.М.</p>
+    </footer>
+</body>
+</html>
